@@ -1,5 +1,6 @@
 import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet, useColorScheme } from "react-native";
+import { Dimensions, StyleSheet, useColorScheme } from "react-native";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import Animated, {
     interpolate,
     useAnimatedRef,
@@ -10,13 +11,17 @@ import Animated, {
 import { ThemedView } from "@/components/ThemedView";
 
 const HEADER_HEIGHT = 250;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 type Props = PropsWithChildren<{
+    activeAnimating: boolean;
     headerImage: ReactElement;
     headerBackgroundColor: { dark: string; light: string };
 }>;
 
 export default function ParallaxScrollView({
+    activeAnimating,
     children,
     headerImage,
     headerBackgroundColor,
@@ -48,6 +53,21 @@ export default function ParallaxScrollView({
 
     return (
         <ThemedView style={styles.container}>
+            <ActivityIndicator
+                style={[
+                    {
+                        width: windowWidth,
+                        height: windowHeight,
+                        position: "absolute",
+                        backgroundColor: MD2Colors.black,
+                        opacity: activeAnimating ? 0.8 : 0,
+                        zIndex: activeAnimating ? 999 : 0,
+                    },
+                ]}
+                size="large"
+                animating={activeAnimating}
+                color={MD2Colors.blue400}
+            />
             <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
                 <Animated.View
                     style={[
