@@ -1,28 +1,56 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedView } from "@/components/ThemedView";
 import { Image, Dimensions, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import { Text, TextInput, SegmentedButtons, Button } from "react-native-paper";
 import { useForm } from "react-hook-form";
-import { initializeApp } from "firebase/app";
+import { db } from "@/data/firebase/config";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-const { setValue, handleSubmit } = useForm();
-
-const firebaseConfig = {
-    //...
-};
-const app = initializeApp(firebaseConfig);
+const { handleSubmit } = useForm();
 
 export default function LoginScreen() {
     const emailRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
 
+    const [indicator, setIndicator] = React.useState(false);
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [segment, setSegment] = React.useState("");
 
-    const onSubmitToLogin = () => {
+    async function getUser() {
+        setIndicator(true);
+
+        let found = false;
+
+        const q = query(
+            collection(db, "users"),
+            where("email", "==", email),
+            where("segment", "==", segment)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            if (doc.data().password == password) found = true;
+        });
+
+        setIndicator(false);
+
+        if (found) {
+            switch (segment) {
+                case "sindico":
+                    router.navigate("(tabs-manager)");
+                    break;
+            }
+        } else {
+            Alert.alert("Acesso inválido! Verifique e-mail ou senha.");
+            return;
+        }
+    }
+
+    const onSubmitToLogin = async () => {
         /*
         if (!email) {
             Alert.alert("Informe o E-mail do usuário!");
@@ -48,11 +76,7 @@ export default function LoginScreen() {
         }
         */
 
-        switch (segment) {
-            case "sindico":
-                router.navigate("(tabs-manager)");
-                break;
-        }
+        await getUser();
     };
 
     const onSubmitToCreateAccount = () => {
@@ -61,6 +85,7 @@ export default function LoginScreen() {
 
     return (
         <ParallaxScrollView
+            activeAnimating={indicator}
             headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
             headerImage={
                 <Image
