@@ -1,12 +1,14 @@
+import React, { useRef, useEffect } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import SchedulePanel from "@/components/SchedulePanel";
-import { ThemedView } from "@/components/ThemedView";
 import { Image, Dimensions, StyleSheet } from "react-native";
-import { Text } from "react-native-paper";
 
 export default function ScheduleScreen() {
+    const [indicator, setIndicator] = React.useState(false);
+
     return (
         <ParallaxScrollView
+            activeAnimating={indicator}
             headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
             headerImage={
                 <Image
