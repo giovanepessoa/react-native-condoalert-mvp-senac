@@ -3,6 +3,7 @@
 1. Read the documentation (https://docs.expo.dev)
 2. Condoalert uses Cloud Firestore
 
+### Important 
 1. Install Node LTS (https://nodejs.org/en/download)
 2. Using VS Code IDE, clone and get your project from the repository
 3. Using the Terminal, enter the “condoalert” folder (cd condoalert) and execute the command “npx expo start”
