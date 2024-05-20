@@ -240,8 +240,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     segmentView: {
-        marginTop: 20,
-        marginBottom: 20,
+        margin: 0,
         backgroundColor: "#ffffff",
     },
     buttonView: {

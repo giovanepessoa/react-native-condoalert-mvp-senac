@@ -5,8 +5,14 @@ import { Image, Dimensions, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
 import { Text, TextInput, SegmentedButtons, Button } from "react-native-paper";
 import { useForm } from "react-hook-form";
+import { initializeApp } from "firebase/app";
 
 const { setValue, handleSubmit } = useForm();
+
+const firebaseConfig = {
+    //...
+};
+const app = initializeApp(firebaseConfig);
 
 export default function LoginScreen() {
     const emailRef = useRef<HTMLInputElement>();
@@ -204,8 +210,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     segmentView: {
-        marginTop: 20,
-        marginBottom: 20,
+        margin: 0,
         backgroundColor: "#ffffff",
     },
     buttonView: {
