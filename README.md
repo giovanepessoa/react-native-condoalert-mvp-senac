@@ -9,3 +9,4 @@
 3. Using the Terminal, enter the “condoalert” folder (cd condoalert) and execute the command “npx expo start”
 4. Get the “expo go” application through Google Play to read the QR code, presented after executing the “npx expo start” command
 5. Get the MER - Entity Relationship Model through the link (https://app.brmodeloweb.com/#!/publicview/664bca4d969d1ee6150c21dc)
+6. Get the YouTube video through the link (https://youtu.be/CJ4wy_tnA-A)
